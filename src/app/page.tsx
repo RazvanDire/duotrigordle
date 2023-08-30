@@ -16,10 +16,13 @@ import GuessCount from "@/components/guess_count";
 import Hotbar from "@/components/hotbar";
 import { changeColor, pickWords } from "@/funcs/word_related"
 import reducer from "@/funcs/reducer";
+import Particles from "react-tsparticles";
 
 export default function App() {
+  const WORD_COUNT = 32;
+
   const [gameState, dispatchGameState] = useReducer(reducer, {
-    boards: pickWords().map((guess) => ({
+    boards: pickWords(WORD_COUNT).map((guess) => ({
       words: [Array(5).fill({ letter: "", color: "guess" }) as WordInfo],
       guessWord: guess,
       won: false,

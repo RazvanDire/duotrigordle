@@ -8,6 +8,6 @@ export function changeColor(word: WordInfo, newColor: Color): WordInfo {
   })) as WordInfo;
 }
 
-export function pickWords() {
-  return WORDS_TARGET.sort(() => 0.5 - Math.random()).slice(0, 32);
+export function pickWords(wordCount: number) {
+  return WORDS_TARGET.sort(() => 0.5 - Math.random()).slice(0, wordCount);
 }

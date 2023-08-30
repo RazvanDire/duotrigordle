@@ -1,9 +1,11 @@
 export default function GuessCount({
   guesses,
   gamesWon,
+  gamesCount,
 }: {
   guesses: number;
   gamesWon: number;
+  gamesCount: number;
 }) {
   let sign = "+";
   let color = "text-white";
@@ -14,7 +16,7 @@ export default function GuessCount({
 
   return (
     <span className={`${color}`}>
-      Guesses: {guesses}/37 ({sign}
+      Guesses: {guesses}/{gamesCount + 5} ({sign}
       {remainingGuesses})
     </span>
   );
