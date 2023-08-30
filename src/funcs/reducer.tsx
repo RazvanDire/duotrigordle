@@ -31,8 +31,8 @@ export default function reducer(state: GameState, action: Action): GameState {
       state.boards = state.boards.map((oldBoard) => {
         if (oldBoard.won) return oldBoard;
         oldBoard.words[oldBoard.words.length - 1][state.letterIndex] = {
-          letter: "",
-          color: "guess",
+          letter: oldBoard.alreadyGuessed[state.letterIndex].letter,
+          color: "known",
         };
         return oldBoard;
       });
@@ -44,6 +44,9 @@ export default function reducer(state: GameState, action: Action): GameState {
             oldBoard.words[oldBoard.words.length - 1],
             "guess"
           );
+          oldBoard.words[oldBoard.words.length - 1][4] = {
+            ...oldBoard.alreadyGuessed[4],
+          };
         });
       }
     }
