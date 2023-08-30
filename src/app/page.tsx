@@ -16,7 +16,6 @@ import GuessCount from "@/components/guess_count";
 import Hotbar from "@/components/hotbar";
 import { changeColor, pickWords } from "@/funcs/word_related"
 import reducer from "@/funcs/reducer";
-//import { Scrollbars } from 'react-custom-scrollbars';
 
 export default function App() {
   const [gameState, dispatchGameState] = useReducer(reducer, {

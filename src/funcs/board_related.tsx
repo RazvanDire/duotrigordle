@@ -16,7 +16,7 @@ export function updateBoard(board: BoardInfo, currentGuess: string): BoardInfo {
       board.words[board.words.length - 1][i].color = "green";
       board.alreadyGuessed[i] = {
         letter: board.guessWord[i],
-		color: "known",
+        color: "known",
       };
       guessWord = guessWord.slice(0, i) + " " + guessWord.slice(i + 1, 5);
     }
@@ -41,9 +41,6 @@ export function updateBoard(board: BoardInfo, currentGuess: string): BoardInfo {
     }
   }
 
-  console.log(board.alreadyGuessed);
-  board.words.push(board.alreadyGuessed);
-  //board.words.push(Array(5).fill({ letter: "", color: "guess" }) as WordInfo);
-  console.log(board.words)
+  board.words.push(structuredClone(board.alreadyGuessed));
   return board;
 }

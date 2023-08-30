@@ -1,4 +1,4 @@
-import { LetterInfo } from "@/types";
+import { LetterInfo } from "@/utils/types";
 
 export default function LetterSquare({ letter, color }: LetterInfo) {
   let cssBgColor = "bg-[#73738c]";

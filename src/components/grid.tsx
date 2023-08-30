@@ -1,4 +1,4 @@
-import { BoardInfo } from "@/types";
+import { BoardInfo } from "@/utils/types";
 import Board from "./board";
 
 export default function Grid({ boards }: { boards: BoardInfo[] }) {

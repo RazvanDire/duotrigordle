@@ -1,5 +1,5 @@
 import LetterSquare from "./letter_square";
-import { LetterInfo, WordInfo } from "@/types";
+import { LetterInfo, WordInfo } from "@/utils/types";
 
 export default function Word({ word }: { word: WordInfo }) {
   return (
