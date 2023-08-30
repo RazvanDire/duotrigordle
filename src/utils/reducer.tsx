@@ -1,7 +1,7 @@
 import { GameState, Action, ActionType } from "@/utils/types";
 import { WORDS_VALID } from "@/utils/wordlist";
-import { updateBoard, countWon } from "./board_related";
-import { changeColor } from "./word_related";
+import { updateBoard, countWon } from "./board_utils";
+import { changeColor } from "./word_utils";
 
 export default function reducer(state: GameState, action: Action): GameState {
   if (action.actionType === ActionType.ENTER) {

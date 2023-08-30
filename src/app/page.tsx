@@ -14,8 +14,8 @@ import Grid from "@/components/grid";
 import { WORDS_TARGET, WORDS_VALID } from "@/utils/wordlist";
 import GuessCount from "@/components/guess_count";
 import Hotbar from "@/components/hotbar";
-import { changeColor, pickWords } from "@/funcs/word_related"
-import reducer from "@/funcs/reducer";
+import { changeColor, pickWords } from "@/utils/word_utils"
+import reducer from "@/utils/reducer";
 
 export default function App() {
   const WORD_COUNT = 32;
