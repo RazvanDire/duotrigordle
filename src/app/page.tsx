@@ -16,7 +16,6 @@ import GuessCount from "@/components/guess_count";
 import Hotbar from "@/components/hotbar";
 import { changeColor, pickWords } from "@/funcs/word_related"
 import reducer from "@/funcs/reducer";
-import Particles from "react-tsparticles";
 
 export default function App() {
   const WORD_COUNT = 32;
