@@ -2,9 +2,11 @@ import { GameState, BoardInfo, WordInfo } from "@/utils/types";
 
 export function countWon(state: GameState): number {
   let count = 0;
+
   for (let i = 0; i < state.boards.length; i++) {
     if (state.boards[i].won === true) count++;
   }
+
   return count;
 }
 
@@ -18,6 +20,7 @@ export function updateBoard(board: BoardInfo, currentGuess: string): BoardInfo {
         letter: board.guessWord[i],
         color: "known",
       };
+
       guessWord = guessWord.slice(0, i) + " " + guessWord.slice(i + 1, 5);
     }
   }
@@ -53,6 +56,7 @@ export function updateBoard(board: BoardInfo, currentGuess: string): BoardInfo {
         );
       } else {
         board.words[board.words.length - 1][i].color = undefined;
+        
         if (!board.grays.includes(currentGuess[i])) {
           board.grays += currentGuess[i];
         }

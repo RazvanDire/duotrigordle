@@ -16,6 +16,7 @@ import GuessCount from "@/components/guess_count";
 import Hotbar from "@/components/hotbar";
 import { changeColor, pickWords } from "@/utils/word_utils"
 import reducer from "@/utils/reducer";
+import Keyboard from "@/components/keyboard";
 
 export default function App() {
   const WORD_COUNT = 32;
@@ -60,7 +61,9 @@ export default function App() {
       <div className="h-5/6">
         <Hotbar gameState={gameState} />
         <Grid boards={gameState.boards} />
+        <Keyboard dispatchGameState={dispatchGameState}/>
       </div>
     </div>
+    
   );
 }

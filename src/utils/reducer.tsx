@@ -28,12 +28,14 @@ export default function reducer(state: GameState, action: Action): GameState {
     if (state.letterIndex > 0) {
       state.letterIndex--;
       state.currentGuess = state.currentGuess.slice(0, -1);
+
       state.boards = state.boards.map((oldBoard) => {
         if (oldBoard.won) return oldBoard;
 
         oldBoard.words[oldBoard.words.length - 1][state.letterIndex] = {
           ...oldBoard.greens[state.letterIndex],
         };
+
         if (state.currentGuess && validGuess(oldBoard, state.currentGuess)) {
           oldBoard.words[oldBoard.words.length - 1] = changeColor(
             oldBoard.words[oldBoard.words.length - 1],
@@ -48,6 +50,7 @@ export default function reducer(state: GameState, action: Action): GameState {
       if (state.letterIndex === 4) {
         state.boards.map((oldBoard) => {
           if (oldBoard.won) return oldBoard;
+
           if (validGuess(oldBoard, state.currentGuess)) {
             oldBoard.words[oldBoard.words.length - 1] = changeColor(
               oldBoard.words[oldBoard.words.length - 1],
@@ -73,6 +76,7 @@ export default function reducer(state: GameState, action: Action): GameState {
     if (state.letterIndex < 5) {
       state.boards.map((oldBoard) => {
         if (oldBoard.won) return oldBoard;
+
         oldBoard.words[oldBoard.words.length - 1][state.letterIndex] = {
           letter: action.letter!,
           color: "guess",
@@ -98,6 +102,7 @@ export default function reducer(state: GameState, action: Action): GameState {
       if (state.letterIndex === 5 && !WORDS_VALID.has(state.currentGuess)) {
         state.boards.map((oldBoard) => {
           if (oldBoard.won) return oldBoard;
+          
           oldBoard.words[oldBoard.words.length - 1] = changeColor(
             oldBoard.words[oldBoard.words.length - 1],
             "not-word"
