@@ -10,7 +10,9 @@ export interface BoardInfo {
   guessWord: string;
   words: WordInfo[];
   won: boolean;
-  alreadyGuessed: WordInfo;
+  greens: WordInfo;
+  yellows: YellowList[];
+  grays: string;
 }
 
 export type WordInfo = [
@@ -43,4 +45,9 @@ export enum ActionType {
 export interface Action {
   actionType: ActionType;
   letter?: string;
+}
+
+export interface YellowList {
+  letter: string;
+  index: number;
 }

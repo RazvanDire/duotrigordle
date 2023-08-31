@@ -14,7 +14,7 @@ export function updateBoard(board: BoardInfo, currentGuess: string): BoardInfo {
   for (let i = 0; i < 5; i++) {
     if (currentGuess[i] === board.guessWord[i]) {
       board.words[board.words.length - 1][i].color = "green";
-      board.alreadyGuessed[i] = {
+      board.greens[i] = {
         letter: board.guessWord[i],
         color: "known",
       };
@@ -34,13 +34,51 @@ export function updateBoard(board: BoardInfo, currentGuess: string): BoardInfo {
     if (board.words[board.words.length - 1][i].color !== "green") {
       if (remainingLetters.includes(currentGuess[i])) {
         board.words[board.words.length - 1][i].color = "yellow";
+        if (
+          !board.yellows.some(
+            (pair) => pair.letter === currentGuess[i] && pair.index === i
+          )
+        ) {
+          board.yellows.push(
+            structuredClone({ letter: currentGuess[i], index: i })
+          );
+        }
         remainingLetters.splice(remainingLetters.indexOf(currentGuess[i]), 1);
       } else {
         board.words[board.words.length - 1][i].color = undefined;
+        if (!board.grays.includes(currentGuess[i])) {
+          board.grays += currentGuess[i];
+        }
       }
     }
   }
 
-  board.words.push(structuredClone(board.alreadyGuessed));
+  board.words.push(structuredClone(board.greens));
   return board;
+}
+
+export function validGuess(board: BoardInfo, currentGuess: string): boolean {
+  for (let i = 0; i < currentGuess.length; i++) {
+    if (board.greens[i].letter) {
+      if (currentGuess[i] !== board.greens[i].letter) return false;
+      else continue;
+    }
+
+    if (
+      board.yellows.some(
+        (pair) => pair.letter === currentGuess[i] && pair.index === i
+      )
+    )
+      return false;
+
+    if (board.grays.includes(currentGuess[i])) return false;
+  }
+
+  if (currentGuess.length === 5) {
+    for (var pair of board.yellows) {
+      if (!currentGuess.includes(pair.letter)) return false;
+    }
+  }
+
+  return true;
 }
