@@ -71,7 +71,11 @@ export function validGuess(board: BoardInfo, currentGuess: string): boolean {
     )
       return false;
 
-    if (board.grays.includes(currentGuess[i])) return false;
+    if (board.grays.includes(currentGuess[i])) {
+      if (board.yellows.some((pair) => (pair.letter === currentGuess[i])))
+        continue;
+      else return false;
+    }
   }
 
   if (currentGuess.length === 5) {
