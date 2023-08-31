@@ -44,6 +44,13 @@ export function updateBoard(board: BoardInfo, currentGuess: string): BoardInfo {
           );
         }
         remainingLetters.splice(remainingLetters.indexOf(currentGuess[i]), 1);
+      } else if (
+        board.yellows.some((pair) => pair.letter === currentGuess[i])
+      ) {
+        board.words[board.words.length - 1][i].color = undefined;
+        board.yellows.push(
+          structuredClone({ letter: currentGuess[i], index: i })
+        );
       } else {
         board.words[board.words.length - 1][i].color = undefined;
         if (!board.grays.includes(currentGuess[i])) {
@@ -71,11 +78,7 @@ export function validGuess(board: BoardInfo, currentGuess: string): boolean {
     )
       return false;
 
-    if (board.grays.includes(currentGuess[i])) {
-      if (board.yellows.some((pair) => (pair.letter === currentGuess[i])))
-        continue;
-      else return false;
-    }
+    if (board.grays.includes(currentGuess[i])) return false;
   }
 
   if (currentGuess.length === 5) {
