@@ -57,8 +57,8 @@ export default function App() {
   );
 
   return (
-    <div className="h-screen w-screen flex justify-center items-center bg-zinc-900 flex-col">
-      <div className="h-5/6">
+    <div className="h-full w-full flex justify-center items-center bg-zinc-900 flex-col">
+      <div className="flex flex-col h-full">
         <Hotbar gameState={gameState} />
         <Grid boards={gameState.boards} />
         <Keyboard dispatchGameState={dispatchGameState}/>
