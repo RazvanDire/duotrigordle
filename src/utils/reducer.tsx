@@ -1,20 +1,19 @@
 import { GameState, Action, ActionType } from "@/utils/types";
 import { WORDS_VALID } from "@/utils/wordlist";
 import { updateBoard, countWon, validGuess } from "./board_utils";
-import { changeColor } from "./word_utils";
+import { changeColor, clearGuess } from "./word_utils";
 
 export default function reducer(state: GameState, action: Action): GameState {
   if (action.actionType === ActionType.ENTER) {
     if (state.letterIndex < 4) {
-      // TODO Add error
-      return { ...state };
+      return clearGuess(state);
     } else if (!WORDS_VALID.has(state.currentGuess)) {
-      // TODO Add error
-      return { ...state };
+      return clearGuess(state);
     } else {
       state.boards = state.boards.map((oldBoard) =>
         oldBoard.won ? oldBoard : updateBoard(oldBoard, state.currentGuess)
       );
+      
       return {
         ...state,
         letterIndex: 0,
