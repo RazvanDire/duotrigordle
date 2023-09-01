@@ -102,7 +102,7 @@ export default function reducer(state: GameState, action: Action): GameState {
       if (state.letterIndex === 5 && !WORDS_VALID.has(state.currentGuess)) {
         state.boards.map((oldBoard) => {
           if (oldBoard.won) return oldBoard;
-          
+
           oldBoard.words[oldBoard.words.length - 1] = changeColor(
             oldBoard.words[oldBoard.words.length - 1],
             "not-word"
@@ -112,6 +112,10 @@ export default function reducer(state: GameState, action: Action): GameState {
     }
 
     return { ...state };
+  }
+
+  if (action.actionType === ActionType.SELECT) {
+    
   }
 
   return { ...state };

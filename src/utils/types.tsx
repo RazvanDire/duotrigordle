@@ -4,6 +4,7 @@ export interface GameState {
   letterIndex: number;
   currentGuess: string;
   gamesWon: number;
+  selectedBoard?: number;
 }
 
 export interface BoardInfo {
@@ -40,11 +41,13 @@ export enum ActionType {
   LETTER,
   ENTER,
   BACKSPACE,
+  SELECT,
 }
 
 export interface Action {
   actionType: ActionType;
   letter?: string;
+  boardNumber?: number;
 }
 
 export interface YellowList {
