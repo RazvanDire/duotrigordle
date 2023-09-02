@@ -25,18 +25,18 @@ export default function Keyboard({
   };
 
   return (
-    <div className="flex flex-col items-center p-8">
-      <div className="flex flex-row">
+    <div className="flex flex-col items-center py-8 w-screen lg:w-auto">
+      <div className="flex flex-row w-full lg:w-auto flex justify-center">
         {firstRow.map((letter, index) => (
           <Key letter={letter} key={index} onClick={callBack} />
         ))}
       </div>
-      <div className="flex flex-row">
+      <div className="flex flex-row w-9/10 lg:w-auto flex justify-center">
         {secondRow.map((letter, index) => (
           <Key letter={letter} key={index + 10} onClick={callBack} />
         ))}
       </div>
-      <div className="flex flex-row">
+      <div className="flex flex-row w-full lg:w-auto flex justify-center">
         <Key letter="⌫" large onClick={callBack} />
         {thirdRow.map((letter, index) => (
           <Key letter={letter} key={index + 20} onClick={callBack} />
