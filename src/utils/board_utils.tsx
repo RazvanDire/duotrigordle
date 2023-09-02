@@ -1,15 +1,5 @@
 import { GameState, BoardInfo, WordInfo } from "@/utils/types";
 
-export function countWon(state: GameState): number {
-  let count = 0;
-
-  for (let i = 0; i < state.boards.length; i++) {
-    if (state.boards[i].won === true) count++;
-  }
-
-  return count;
-}
-
 export function updateBoard(board: BoardInfo, currentGuess: string): BoardInfo {
   let guessWord = board.guessWord;
 

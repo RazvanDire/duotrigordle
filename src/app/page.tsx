@@ -60,9 +60,9 @@ export default function App() {
     <div className="h-full w-full flex justify-center items-center bg-zinc-900 flex-col">
       <div className="min-h-0 flex flex-col basis-0 grow">
         <Hotbar gameState={gameState} />
-        <Grid boards={gameState.boards} />
+        <Grid boards={gameState.boards} dispatchGameState={dispatchGameState} selectedBoard={gameState.selectedBoard}/>
       </div>
-      <Keyboard dispatchGameState={dispatchGameState}/>
+      <Keyboard dispatchGameState={dispatchGameState} boards={gameState.boards} selectedBoard={gameState.selectedBoard}/>
     </div>
     
   );

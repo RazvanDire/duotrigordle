@@ -37,6 +37,8 @@ export type Color =
   | "bad-guess"
   | "known";
 
+export type KeyColor = "yellow" | "green" | "gray";
+
 export enum ActionType {
   LETTER,
   ENTER,

@@ -1,11 +1,13 @@
-import { LetterInfo } from "./types";
+import { BoardInfo, KeyColor } from "./types";
 
-export function setRows(letters: string): LetterInfo[] {
-	let row: LetterInfo[] = Array(letters.length).fill({letter: "", color: undefined});
-
-	for (let i = 0; i < letters.length; i++) {
-		row[i].letter = letters[i];
+export function getKeyColor(keyLetter: string, board: BoardInfo): KeyColor | undefined {
+	if (board.greens.some((letter) => letter.letter === keyLetter)) {
+		return "green";
 	}
 
-	return row;
+	if (board.yellows.some((letter) => letter.letter === keyLetter)) {
+		return "yellow";
+	}
+
+	if (board.grays.includes(keyLetter)) return "gray";
 }

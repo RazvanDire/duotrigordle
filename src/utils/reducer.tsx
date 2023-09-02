@@ -1,6 +1,6 @@
 import { GameState, Action, ActionType } from "@/utils/types";
 import { WORDS_VALID } from "@/utils/wordlist";
-import { updateBoard, countWon, validGuess } from "./board_utils";
+import { updateBoard, validGuess } from "./board_utils";
 import { changeColor, clearGuess } from "./word_utils";
 
 export default function reducer(state: GameState, action: Action): GameState {
@@ -10,8 +10,18 @@ export default function reducer(state: GameState, action: Action): GameState {
     } else if (!WORDS_VALID.has(state.currentGuess)) {
       return clearGuess(state);
     } else {
-      state.boards = state.boards.map((oldBoard) =>
-        oldBoard.won ? oldBoard : updateBoard(oldBoard, state.currentGuess)
+      state.boards = state.boards.map((oldBoard) => {
+        if (oldBoard.won) return oldBoard;
+
+        const updatedBoard = updateBoard(oldBoard, state.currentGuess);
+        if (updatedBoard.won) {
+          state.selectedBoard = undefined;
+          state.gamesWon++;
+        }
+        
+        return updatedBoard;
+      }
+        
       );
       
       return {
@@ -19,7 +29,6 @@ export default function reducer(state: GameState, action: Action): GameState {
         letterIndex: 0,
         currentGuess: "",
         guesses: state.guesses + 1,
-        gamesWon: countWon(state),
       };
     }
   }
@@ -114,7 +123,9 @@ export default function reducer(state: GameState, action: Action): GameState {
   }
 
   if (action.actionType === ActionType.SELECT) {
-    
+    state.selectedBoard = action.boardNumber;
+
+    return { ...state };
   }
 
   return { ...state };
