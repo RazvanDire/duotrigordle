@@ -5,6 +5,7 @@ export interface GameState {
   currentGuess: string;
   gamesWon: number;
   selectedBoard?: number;
+  usedLetters: string;
 }
 
 export interface BoardInfo {
@@ -37,7 +38,7 @@ export type Color =
   | "bad-guess"
   | "known";
 
-export type KeyColor = "yellow" | "green" | "gray";
+export type KeyColor = "yellow" | "green" | "gray" | "lilac";
 
 export enum ActionType {
   LETTER,

@@ -2,6 +2,7 @@ import { GameState, Action, ActionType } from "@/utils/types";
 import { WORDS_VALID } from "@/utils/wordlist";
 import { updateBoard, validGuess } from "./board_utils";
 import { changeColor, clearGuess } from "./word_utils";
+import { getUsedLetters } from "./gamestate_utils";
 
 export default function reducer(state: GameState, action: Action): GameState {
   if (action.actionType === ActionType.ENTER) {
@@ -27,6 +28,7 @@ export default function reducer(state: GameState, action: Action): GameState {
       return {
         ...state,
         letterIndex: 0,
+        usedLetters: getUsedLetters(state.currentGuess, state.usedLetters),
         currentGuess: "",
         guesses: state.guesses + 1,
       };

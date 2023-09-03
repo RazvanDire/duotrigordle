@@ -1,4 +1,4 @@
-import { getKeyColor } from "@/utils/keyboard_utils";
+import { getGlobalKeyColor, getKeyColor } from "@/utils/keyboard_utils";
 import Key from "./key";
 import { Action, ActionType, BoardInfo } from "@/utils/types";
 
@@ -6,10 +6,12 @@ export default function Keyboard({
   dispatchGameState,
   boards,
   selectedBoard,
+  usedLetters,
 }: {
   dispatchGameState: (v: Action) => void;
   boards: BoardInfo[];
   selectedBoard: number | undefined;
+  usedLetters: string;
 }) {
   let firstRow = "QWERTYUIOP".split("");
   let secondRow = "ASDFGHJKL".split("");
@@ -40,7 +42,7 @@ export default function Keyboard({
             color={
               selectedBoard !== undefined
                 ? getKeyColor(letter, boards[selectedBoard])
-                : undefined
+                : getGlobalKeyColor(letter, usedLetters)
             }
           />
         ))}
@@ -54,13 +56,13 @@ export default function Keyboard({
             color={
               selectedBoard !== undefined
                 ? getKeyColor(letter, boards[selectedBoard])
-                : undefined
+                : getGlobalKeyColor(letter, usedLetters)
             }
           />
         ))}
       </div>
       <div className="flex flex-row w-full lg:w-auto flex justify-center">
-        <Key letter="⌫" large onClick={callBack} />
+        <Key letter="↵" large onClick={callBack} />
         {thirdRow.map((letter, index) => (
           <Key
             letter={letter}
@@ -69,11 +71,11 @@ export default function Keyboard({
             color={
               selectedBoard !== undefined
                 ? getKeyColor(letter, boards[selectedBoard])
-                : undefined
+                : getGlobalKeyColor(letter, usedLetters)
             }
           />
         ))}
-        <Key letter="↵" large onClick={callBack} />
+        <Key letter="⌫" large onClick={callBack} />
       </div>
     </div>
   );

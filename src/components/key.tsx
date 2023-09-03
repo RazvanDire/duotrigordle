@@ -26,6 +26,11 @@ export default function Key({
     case "gray":
       cssBgColor = "bg-[#2e2e38]";
       cssLetterColor = "text-white/50";
+      break;
+    case "lilac":
+      cssBgColor = "bg-violet-400";
+      cssLetterColor = "text-black";
+      break;
   }
 
   return (

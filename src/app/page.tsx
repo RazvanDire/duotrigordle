@@ -14,7 +14,7 @@ import Grid from "@/components/grid";
 import { WORDS_TARGET, WORDS_VALID } from "@/utils/wordlist";
 import GuessCount from "@/components/guess_count";
 import Hotbar from "@/components/hotbar";
-import { changeColor, pickWords } from "@/utils/word_utils"
+import { changeColor, pickWords } from "@/utils/word_utils";
 import reducer from "@/utils/reducer";
 import Keyboard from "@/components/keyboard";
 
@@ -34,6 +34,7 @@ export default function App() {
     letterIndex: 0,
     currentGuess: "",
     gamesWon: 0,
+    usedLetters: "",
   });
 
   useEffect(
@@ -60,10 +61,18 @@ export default function App() {
     <div className="h-full w-full flex justify-center items-center bg-zinc-900 flex-col">
       <div className="min-h-0 flex flex-col basis-0 grow">
         <Hotbar gameState={gameState} />
-        <Grid boards={gameState.boards} dispatchGameState={dispatchGameState} selectedBoard={gameState.selectedBoard}/>
+        <Grid
+          boards={gameState.boards}
+          dispatchGameState={dispatchGameState}
+          selectedBoard={gameState.selectedBoard}
+        />
       </div>
-      <Keyboard dispatchGameState={dispatchGameState} boards={gameState.boards} selectedBoard={gameState.selectedBoard}/>
+      <Keyboard
+        dispatchGameState={dispatchGameState}
+        boards={gameState.boards}
+        selectedBoard={gameState.selectedBoard}
+        usedLetters={gameState.usedLetters}
+      />
     </div>
-    
   );
 }
