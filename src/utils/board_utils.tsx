@@ -1,13 +1,13 @@
 import { GameState, BoardInfo, WordInfo } from "@/utils/types";
 
 export function updateBoard(board: BoardInfo, currentGuess: string): BoardInfo {
-  let guessWord = board.guessWord;
+  let guessWord = board.solution;
 
   for (let i = 0; i < 5; i++) {
-    if (currentGuess[i] === board.guessWord[i]) {
+    if (currentGuess[i] === board.solution[i]) {
       board.words[board.words.length - 1][i].color = "green";
       board.greens[i] = {
-        letter: board.guessWord[i],
+        letter: board.solution[i],
         color: "known",
       };
 
@@ -46,7 +46,7 @@ export function updateBoard(board: BoardInfo, currentGuess: string): BoardInfo {
         );
       } else {
         board.words[board.words.length - 1][i].color = undefined;
-        
+
         if (!board.grays.includes(currentGuess[i])) {
           board.grays += currentGuess[i];
         }

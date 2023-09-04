@@ -6,10 +6,13 @@ export interface GameState {
   gamesWon: number;
   selectedBoard?: number;
   usedLetters: string;
+  time: number;
+  won: boolean;
+  ended: boolean;
 }
 
 export interface BoardInfo {
-  guessWord: string;
+  solution: string;
   words: WordInfo[];
   won: boolean;
   greens: WordInfo;
@@ -45,6 +48,7 @@ export enum ActionType {
   ENTER,
   BACKSPACE,
   SELECT,
+  RESTART,
 }
 
 export interface Action {
