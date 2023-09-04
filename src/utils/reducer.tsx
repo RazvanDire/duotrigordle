@@ -2,10 +2,15 @@ import { GameState, Action, ActionType } from "@/utils/types";
 import { WORDS_VALID } from "@/utils/wordlist";
 import { updateBoard, validGuess } from "./board_utils";
 import { changeColor, clearGuess } from "./word_utils";
-import { getFormattedTime, getUsedLetters } from "./gamestate_utils";
+import {
+  getFormattedTime,
+  getUsedLetters,
+  newGameState,
+} from "./gamestate_utils";
 
 export default function reducer(openModal: () => void) {
   return (state: GameState, action: Action): GameState => {
+    if (action.actionType === ActionType.RESTART) state = newGameState(32);
     if (state.ended) return { ...state };
 
     if (action.actionType === ActionType.ENTER) {

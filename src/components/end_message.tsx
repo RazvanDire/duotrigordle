@@ -7,7 +7,7 @@ export default function EndMessage({ won }: { won: boolean }) {
   }
 
   return (
-    <div className={`text-3xl font-bold flex justify-center ${cssLetterColor}`}>
+    <div className={`text-xl md:text-3xl font-bold flex justify-center ${cssLetterColor}`}>
       {message}
     </div>
   );

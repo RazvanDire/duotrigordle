@@ -61,7 +61,7 @@ export default function App() {
           selectedBoard={gameState.selectedBoard}
           usedLetters={gameState.usedLetters}
         />
-        <StatsModal opened={opened} close={close} gameState={gameState}/>
+        <StatsModal opened={opened} close={close} gameState={gameState} dispatchGameState={dispatchGameState}/>
       </div>
     </MantineProvider>
   );

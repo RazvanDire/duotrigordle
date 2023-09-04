@@ -8,7 +8,7 @@ export default function StatsBar({ gameState }: { gameState: GameState }) {
   }
 
   return (
-    <div className="flex flex-row justify-between text-white">
+    <div className="text-sm md:text-base pt-2 flex flex-row justify-between text-white">
       <div className="pr-4">
         Time: {getFormattedTime(structuredClone(gameState.time))}
       </div>

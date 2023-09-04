@@ -1,18 +1,26 @@
-import { GameState } from "@/utils/types";
+import { Action, ActionType, GameState } from "@/utils/types";
 import { Modal } from "@mantine/core";
 import StatsBar from "./stats_bar";
 import SolutionGrid from "./solution_grid";
 import EndMessage from "./end_message";
+import Restart from "./restart_button";
 
 export default function StatsModal({
   opened,
   close,
   gameState,
+  dispatchGameState,
 }: {
   opened: boolean;
   close: () => void;
   gameState: GameState;
+  dispatchGameState: (v: Action) => void;
 }) {
+  let callBack = () => {
+    close();
+    dispatchGameState({ actionType: ActionType.RESTART });
+  };
+
   return (
     <Modal
       opened={opened}
@@ -26,7 +34,8 @@ export default function StatsModal({
     >
       <EndMessage won={gameState.won} />
       <StatsBar gameState={gameState} />
-      <SolutionGrid boards={gameState.boards} won={gameState.won} />
+      <SolutionGrid boards={gameState.boards} won={gameState.won} ended={gameState.ended}/>
+      <Restart onClick={callBack} />
     </Modal>
   );
 }
