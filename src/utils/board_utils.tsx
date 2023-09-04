@@ -1,6 +1,6 @@
 import { GameState, BoardInfo, WordInfo } from "@/utils/types";
 
-export function updateBoard(board: BoardInfo, currentGuess: string): BoardInfo {
+export function updateBoard(board: BoardInfo, currentGuess: string, ended: boolean): BoardInfo {
   let guessWord = board.solution;
 
   for (let i = 0; i < 5; i++) {
@@ -54,7 +54,7 @@ export function updateBoard(board: BoardInfo, currentGuess: string): BoardInfo {
     }
   }
 
-  board.words.push(structuredClone(board.greens));
+  if (!ended) board.words.push(structuredClone(board.greens));
   return board;
 }
 

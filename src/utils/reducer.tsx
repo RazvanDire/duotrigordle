@@ -6,6 +6,8 @@ import { getFormattedTime, getUsedLetters } from "./gamestate_utils";
 
 export default function reducer(openModal: () => void) {
   return (state: GameState, action: Action): GameState => {
+    if (state.ended) return { ...state };
+
     if (action.actionType === ActionType.ENTER) {
       if (state.letterIndex < 4) {
         return clearGuess(state);
@@ -17,10 +19,17 @@ export default function reducer(openModal: () => void) {
           state.time = d.getTime();
         }
 
+        state.guesses++;
+        if (state.guesses >= state.boards.length + 5) state.ended = true;
+
         state.boards = state.boards.map((oldBoard) => {
           if (oldBoard.won) return oldBoard;
 
-          const updatedBoard = updateBoard(oldBoard, state.currentGuess);
+          const updatedBoard = updateBoard(
+            oldBoard,
+            state.currentGuess,
+            state.ended
+          );
           if (updatedBoard.won) {
             state.selectedBoard = undefined;
             state.gamesWon++;
@@ -31,7 +40,6 @@ export default function reducer(openModal: () => void) {
           return updatedBoard;
         });
 
-        state.guesses++;
         if (state.won || state.guesses === state.boards.length + 5) {
           const d = new Date();
           state.time = d.getTime() - state.time;
