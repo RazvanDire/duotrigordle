@@ -39,7 +39,10 @@ export default function reducer(openModal: () => void) {
             state.selectedBoard = undefined;
             state.gamesWon++;
 
-            if (state.gamesWon === state.boards.length) state.won = true;
+            if (state.gamesWon === state.boards.length) {
+              state.won = true;
+              state.ended = true;
+            }
           }
 
           return updatedBoard;
