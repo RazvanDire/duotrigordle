@@ -62,7 +62,7 @@ export default function Keyboard({
         ))}
       </div>
       <div className="flex flex-row w-full lg:w-auto flex justify-center">
-        <Key letter="↵" large onClick={callBack} />
+        <Key letter="⌫" large onClick={callBack} />
         {thirdRow.map((letter, index) => (
           <Key
             letter={letter}
@@ -75,7 +75,7 @@ export default function Keyboard({
             }
           />
         ))}
-        <Key letter="⌫" large onClick={callBack} />
+        <Key letter="↵" large onClick={callBack} />
       </div>
     </div>
   );
