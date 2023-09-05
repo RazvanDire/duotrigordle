@@ -1,7 +1,5 @@
 "use client";
-import {
-  ActionType,
-} from "@/utils/types";
+import { ActionType } from "@/utils/types";
 import { useEffect, useReducer } from "react";
 import Grid from "@/components/grid";
 import Hotbar from "@/components/hotbar";
@@ -48,7 +46,7 @@ export default function App() {
     >
       <div className="h-full w-full flex justify-center items-center bg-zinc-900 flex-col">
         <div className="min-h-0 flex flex-col basis-0 grow">
-          <Hotbar gameState={gameState} />
+          <Hotbar gameState={gameState} open={open} />
           <Grid
             boards={gameState.boards}
             dispatchGameState={dispatchGameState}
@@ -61,7 +59,12 @@ export default function App() {
           selectedBoard={gameState.selectedBoard}
           usedLetters={gameState.usedLetters}
         />
-        <StatsModal opened={opened} close={close} gameState={gameState} dispatchGameState={dispatchGameState}/>
+        <StatsModal
+          opened={opened}
+          close={close}
+          gameState={gameState}
+          dispatchGameState={dispatchGameState}
+        />
       </div>
     </MantineProvider>
   );
