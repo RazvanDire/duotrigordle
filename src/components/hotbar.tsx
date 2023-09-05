@@ -1,4 +1,4 @@
-import { GameState } from "@/utils/types";
+import { GameState, State } from "@/utils/types";
 import GuessCount from "./guess_count";
 
 export default function Hotbar({
@@ -6,7 +6,7 @@ export default function Hotbar({
   open,
 }: {
   gameState: GameState;
-  open: () => void;
+  open: (g: GameState) => void;
 }) {
   return (
     <div className="text-sm md:text-base pt-6 flex flex-row pb-2">
@@ -14,7 +14,7 @@ export default function Hotbar({
         Boards: {gameState.gamesWon}/{gameState.boards.length}
       </div>
       <div className="text-black w-1/5 flex justify-center">
-        <button onClick={open} className="bg-violet-400 rounded py-2">
+        <button onClick={() => open(gameState)} className="bg-violet-400 rounded py-2">
           <span className="px-2 text-black">Menu</span>
         </button>
       </div>

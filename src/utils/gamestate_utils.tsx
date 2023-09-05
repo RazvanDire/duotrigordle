@@ -30,8 +30,8 @@ export function newGameState(count: number): GameState {
     gamesWon: 0,
     usedLetters: "",
     time: 0,
-    won: false,
-    ended: false,
+    startTime: 0,
+    state: "ongoing",
   };
 }
 

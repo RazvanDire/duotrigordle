@@ -12,33 +12,30 @@ export default function StatsModal({
   dispatchGameState,
 }: {
   opened: boolean;
-  close: () => void;
+  close: (g: GameState) => void;
   gameState: GameState;
-  dispatchGameState: (v: Action) => void;
+  dispatchGameState: (a: Action) => void;
 }) {
   let callBack = () => {
-    close();
+    close(gameState);
     dispatchGameState({ actionType: ActionType.RESTART });
   };
-  if (gameState.ended)
-    return (
-      <Modal
-        opened={opened}
-        onClose={close}
-        title=""
-        withCloseButton={false}
-        closeOnEscape={false}
-        closeOnClickOutside={true}
-        centered
-        size="auto"
-      >
-        <EndMessage won={gameState.won} />
-        <StatsBar gameState={gameState} />
-        <SolutionGrid
-          boards={gameState.boards}
-          won={gameState.won}
-        />
-        <Restart onClick={callBack} />
-      </Modal>
-    );
+
+  return (
+    <Modal
+      opened={opened}
+      onClose={() => close(gameState)}
+      title=""
+      withCloseButton={false}
+      closeOnEscape={false}
+      closeOnClickOutside={true}
+      centered
+      size="auto"
+    >
+      <EndMessage state={gameState.state} />
+      <StatsBar gameState={gameState} />
+      <SolutionGrid boards={gameState.boards} state={gameState.state} />
+      <Restart onClick={callBack} />
+    </Modal>
+  );
 }

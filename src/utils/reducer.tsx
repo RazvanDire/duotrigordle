@@ -9,88 +9,96 @@ import {
 } from "./gamestate_utils";
 
 export default function reducer(openModal: () => void) {
-  return (state: GameState, action: Action): GameState => {
-    if (action.actionType === ActionType.RESTART) state = newGameState(32);
-    if (state.ended) return { ...state };
+  return (gameState: GameState, action: Action): GameState => {
+    if (action.actionType === ActionType.RESTART) gameState = newGameState(32);
+    if (gameState.state !== "ongoing") return { ...gameState };
 
     if (action.actionType === ActionType.ENTER) {
-      if (state.letterIndex < 4) {
-        return clearGuess(state);
-      } else if (!WORDS_VALID.has(state.currentGuess)) {
-        return clearGuess(state);
+      if (gameState.letterIndex < 4) {
+        return clearGuess(gameState);
+      } else if (!WORDS_VALID.has(gameState.currentGuess)) {
+        return clearGuess(gameState);
       } else {
-        if (state.guesses === 0) {
+        if (gameState.guesses === 0) {
           const d = new Date();
-          state.time = d.getTime();
+          gameState.startTime = d.getTime();
         }
 
-        state.guesses++;
-        if (state.guesses >= state.boards.length + 5) state.ended = true;
+        gameState.guesses++;
 
-        state.boards = state.boards.map((oldBoard) => {
+        if (gameState.guesses >= gameState.boards.length + 5) {
+          gameState.state = "lost";
+        }
+
+        gameState.boards = gameState.boards.map((oldBoard) => {
           if (oldBoard.won) return oldBoard;
 
           const updatedBoard = updateBoard(
             oldBoard,
-            state.currentGuess,
-            state.ended
+            gameState.currentGuess,
+            gameState.state
           );
           if (updatedBoard.won) {
-            state.selectedBoard = undefined;
-            state.gamesWon++;
-
-            if (state.gamesWon === state.boards.length) {
-              state.won = true;
-              state.ended = true;
-            }
+            gameState.selectedBoard = undefined;
+            gameState.gamesWon++;
           }
 
           return updatedBoard;
         });
 
-        if (state.won || state.guesses === state.boards.length + 5) {
+        if (gameState.gamesWon === gameState.boards.length) {
+          gameState.state = "won";
+        }
+
+        if (gameState.state === "won" || gameState.state === "lost") {
           const d = new Date();
-          state.time = d.getTime() - state.time;
+          gameState.time += d.getTime() - gameState.startTime;
 
           openModal();
         }
 
         return {
-          ...state,
+          ...gameState,
           letterIndex: 0,
-          usedLetters: getUsedLetters(state.currentGuess, state.usedLetters),
+          usedLetters: getUsedLetters(
+            gameState.currentGuess,
+            gameState.usedLetters
+          ),
           currentGuess: "",
         };
       }
     }
     if (action.actionType === ActionType.BACKSPACE) {
-      if (state.letterIndex > 0) {
-        state.letterIndex--;
-        state.currentGuess = state.currentGuess.slice(0, -1);
+      if (gameState.letterIndex > 0) {
+        gameState.letterIndex--;
+        gameState.currentGuess = gameState.currentGuess.slice(0, -1);
 
-        state.boards = state.boards.map((oldBoard) => {
+        gameState.boards = gameState.boards.map((oldBoard) => {
           if (oldBoard.won) return oldBoard;
 
-          oldBoard.words[oldBoard.words.length - 1][state.letterIndex] = {
-            ...oldBoard.greens[state.letterIndex],
+          oldBoard.words[oldBoard.words.length - 1][gameState.letterIndex] = {
+            ...oldBoard.greens[gameState.letterIndex],
           };
 
-          if (state.currentGuess && validGuess(oldBoard, state.currentGuess)) {
+          if (
+            gameState.currentGuess &&
+            validGuess(oldBoard, gameState.currentGuess)
+          ) {
             oldBoard.words[oldBoard.words.length - 1] = changeColor(
               oldBoard.words[oldBoard.words.length - 1],
               "guess",
-              state.letterIndex
+              gameState.letterIndex
             );
           }
 
           return oldBoard;
         });
 
-        if (state.letterIndex === 4) {
-          state.boards.map((oldBoard) => {
+        if (gameState.letterIndex === 4) {
+          gameState.boards.map((oldBoard) => {
             if (oldBoard.won) return oldBoard;
 
-            if (validGuess(oldBoard, state.currentGuess)) {
+            if (validGuess(oldBoard, gameState.currentGuess)) {
               oldBoard.words[oldBoard.words.length - 1] = changeColor(
                 oldBoard.words[oldBoard.words.length - 1],
                 "guess"
@@ -99,7 +107,7 @@ export default function reducer(openModal: () => void) {
               oldBoard.words[oldBoard.words.length - 1] = changeColor(
                 oldBoard.words[oldBoard.words.length - 1],
                 "bad-guess",
-                state.letterIndex
+                gameState.letterIndex
               );
             }
 
@@ -109,37 +117,40 @@ export default function reducer(openModal: () => void) {
           });
         }
       }
-      return { ...state };
+      return { ...gameState };
     }
     if (action.actionType === ActionType.LETTER) {
-      if (state.letterIndex < 5) {
-        state.boards.map((oldBoard) => {
+      if (gameState.letterIndex < 5) {
+        gameState.boards.map((oldBoard) => {
           if (oldBoard.won) return oldBoard;
 
-          oldBoard.words[oldBoard.words.length - 1][state.letterIndex] = {
+          oldBoard.words[oldBoard.words.length - 1][gameState.letterIndex] = {
             letter: action.letter!,
             color: "guess",
           };
 
           return oldBoard;
         });
-        state.letterIndex++;
-        state.currentGuess += action.letter;
+        gameState.letterIndex++;
+        gameState.currentGuess += action.letter;
 
-        state.boards.map((oldBoard) => {
-          if (oldBoard.won || validGuess(oldBoard, state.currentGuess)) {
+        gameState.boards.map((oldBoard) => {
+          if (oldBoard.won || validGuess(oldBoard, gameState.currentGuess)) {
             return oldBoard;
           } else {
             oldBoard.words[oldBoard.words.length - 1] = changeColor(
               oldBoard.words[oldBoard.words.length - 1],
               "bad-guess",
-              state.letterIndex
+              gameState.letterIndex
             );
           }
         });
 
-        if (state.letterIndex === 5 && !WORDS_VALID.has(state.currentGuess)) {
-          state.boards.map((oldBoard) => {
+        if (
+          gameState.letterIndex === 5 &&
+          !WORDS_VALID.has(gameState.currentGuess)
+        ) {
+          gameState.boards.map((oldBoard) => {
             if (oldBoard.won) return oldBoard;
 
             oldBoard.words[oldBoard.words.length - 1] = changeColor(
@@ -150,15 +161,15 @@ export default function reducer(openModal: () => void) {
         }
       }
 
-      return { ...state };
+      return { ...gameState };
     }
 
     if (action.actionType === ActionType.SELECT) {
-      state.selectedBoard = action.boardNumber;
+      gameState.selectedBoard = action.boardNumber;
 
-      return { ...state };
+      return { ...gameState };
     }
 
-    return { ...state };
+    return { ...gameState };
   };
 }

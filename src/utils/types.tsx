@@ -7,9 +7,11 @@ export interface GameState {
   selectedBoard?: number;
   usedLetters: string;
   time: number;
-  won: boolean;
-  ended: boolean;
+  startTime: number;
+  state: State;
 }
+
+export type State = "won" | "lost" | "paused" | "ongoing";
 
 export interface BoardInfo {
   solution: string;
