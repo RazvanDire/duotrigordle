@@ -32,7 +32,7 @@ export default function Keyboard({
   };
 
   return (
-    <div className="flex flex-col items-center pt-8 lg:py-8 w-screen lg:w-auto">
+    <div className="flex flex-col items-center pt-4 lg:py-8 w-screen lg:w-auto">
       <div className="flex flex-row w-full lg:w-auto flex justify-center">
         {firstRow.map((letter, index) => (
           <Key
