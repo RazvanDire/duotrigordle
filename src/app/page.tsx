@@ -43,14 +43,18 @@ export default function App() {
       if (gameState.guesses) {
         const d = new Date();
         gameState.time += d.getTime() - gameState.startTime;
-        gameState.startTime = d.getTime();
       }
     }
     open();
   };
 
   let closeUnpause = (gameState: GameState) => {
-    if (gameState.state === "paused") gameState.state = "ongoing";
+    if (gameState.state === "paused") {
+      gameState.state = "ongoing";
+
+      const d = new Date();
+      gameState.startTime = d.getTime();
+    }
     close();
   };
 
