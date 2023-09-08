@@ -14,8 +14,15 @@ export default function Hotbar({
         Boards: {gameState.gamesWon}/{gameState.boards.length}
       </div>
       <div className="text-black w-1/5 flex justify-center">
-        <button onClick={() => open(gameState)} className="bg-violet-400 rounded py-2">
-          <span className="px-2 text-black">Menu</span>
+        <button
+          onClick={() => open(gameState)}
+          className="bg-violet-400 rounded py-2"
+        >
+          <span className="px-2 text-black">
+            {gameState.state === "ongoing" || gameState.state === "paused"
+              ? "Pause"
+              : "Menu"}
+          </span>
         </button>
       </div>
 

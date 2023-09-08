@@ -49,13 +49,13 @@ export default function App() {
   };
 
   let closeUnpause = (gameState: GameState) => {
+    close();
     if (gameState.state === "paused") {
       gameState.state = "ongoing";
 
       const d = new Date();
       gameState.startTime = d.getTime();
     }
-    close();
   };
 
   return (
