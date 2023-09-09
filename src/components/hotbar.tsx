@@ -15,7 +15,10 @@ export default function Hotbar({
       </div>
       <div className="text-black w-1/5 flex justify-center">
         <button
-          onClick={() => open(gameState)}
+          onClick={(e) => {
+            open(gameState);
+            e.currentTarget.blur();
+          }}
           className="bg-violet-400 rounded py-2"
         >
           <span className="px-2 text-black">
