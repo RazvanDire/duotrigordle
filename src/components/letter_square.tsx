@@ -32,7 +32,7 @@ export default function LetterSquare({ letter, color }: LetterInfo) {
 
   return (
     <div
-      className={`w-8 h-8 border border-black flex justify-center items-center ${cssBgColor} font-medium`}
+      className={`letter w-8 h-8 border border-black flex justify-center items-center ${cssBgColor} font-medium`}
     >
       <span className={`text-2xl ${cssLetterColor}`}>{letter}</span>
     </div>

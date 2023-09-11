@@ -16,7 +16,7 @@ export default function Board({
   return (
     <div
       onClick={onClick}
-      className={`flex flex-col ${opacity} ${
+      className={`board flex flex-col ${opacity} ${
         selected ? "border-2 border-white" : "border-2 border-zinc-900"
       }`}
     >

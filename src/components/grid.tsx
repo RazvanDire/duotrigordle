@@ -18,7 +18,10 @@ export default function Grid({
 
   return (
     <div className="flex-1 overflow-y-scroll no-scrollbar">
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
+      <div
+        id="grid"
+        className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4"
+      >
         {boards.map((board, index) => (
           <Board
             board={board}
